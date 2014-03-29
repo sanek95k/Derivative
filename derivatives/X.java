@@ -3,18 +3,23 @@ package derivatives;
 /**
  * Created by Александр on 28.03.14.
  */
-public class X extends Function {
+public class X extends FunctionNode {
     public X(){
         super("X");
     }
 
-    public X(Function a, Function b, Function c){
-        super("X", a, b, c);
+    public X(FunctionNode parent, FunctionNode leftChild, FunctionNode rightChild){
+        super("X", parent, leftChild, rightChild);
     }
 
     @Override
-    public Function takeDerivative(){
-        Function result = new Constant(1, parent, leftChild, rightChild);
+    public FunctionNode clone(){
+        return new X();
+    }
+
+    @Override
+    public FunctionNode takeDerivative(){
+        FunctionNode result = new Constant(1, parent, leftChild, rightChild);
         if (parent != null){
             if (this == parent.leftChild){
                 parent.leftChild = result;

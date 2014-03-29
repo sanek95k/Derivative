@@ -3,23 +3,28 @@ package derivatives;
 /**
  * Created by Александр on 28.03.14.
  */
-public class Plus extends Function{
+public class Plus extends FunctionNode{
 
     public Plus(){
         super("Plus");
     }
 
-    public Plus(Function a, Function b, Function c){
+    public Plus(FunctionNode a, FunctionNode b, FunctionNode c){
         super("Plus", a, b, c);
     }
 
     @Override
-    public Function takeDerivative(){
+    public FunctionNode clone(){
+       return new Plus();
+    }
 
-        Function left, right;
+    @Override
+    public FunctionNode takeDerivative(){
 
+        FunctionNode left = null, right = null;
+        if (leftChild != null)
             left = leftChild.takeDerivative();
-
+        if (rightChild != null)
             right = rightChild.takeDerivative();
 
         return new Plus(parent, left, right);

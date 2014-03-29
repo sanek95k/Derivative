@@ -3,22 +3,27 @@ package derivatives;
 /**
  * Created by Александр on 28.03.14.
  */
-public class Sin extends Function {
+public class Sin extends FunctionNode {
 
     public Sin(){
         super("Sin");
     }
 
-    public Sin(Function a, Function b, Function c){
-        super("Sin", a, b, c);
+    public Sin(FunctionNode parent, FunctionNode leftChild, FunctionNode rightChild){
+        super("Sin", parent, leftChild, rightChild);
     }
 
     @Override
-    public Function takeDerivative() {
-        Function result = new Cos();
+    public FunctionNode clone(){
+        return new Sin();
+    }
+
+    @Override
+    public FunctionNode takeDerivative() {
+        FunctionNode result = new Cos();
 
         if (parent != null){
-            Function temp;
+            FunctionNode temp;
             if (this == parent.leftChild){
                 parent.leftChild = new Asterisk(parent, result, this.leftChild);
                 temp = parent.leftChild;
@@ -29,13 +34,13 @@ public class Sin extends Function {
             }
             result.parent = temp;
 
-        }else{
+        }
+        else{
             result.parent = new Asterisk(null, result, null);
         }
 
         result.leftChild = this.leftChild;
-        //if (result.parent.rightChild != null)
-            result.parent.rightChild = this.leftChild.takeDerivative();
+        result.parent.rightChild = this.leftChild.takeDerivative();
 
         return result;
     }

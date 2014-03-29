@@ -1,22 +1,25 @@
 import derivatives.*;
 
-import java.util.TreeMap;
-
 /**
  * Created by Александр on 28.03.14.
  */
 public class Test {
     public static void main(String[] args){
 
-        Function fun = new Sin();
-        fun.setLeftChild(new Plus());
-        fun.getLeftChild().setRightChild(new X());
-        fun.getLeftChild().setLeftChild(new Constant(2));
+        FunctionNode fun = null;
 
-       fun = fun.takeDerivative();
+        // Sin(X * 4) * X
+        fun = new Asterisk(null, new Sin(fun, null, null), new X(fun, null, null));
+        fun.getLeftChild().setLeftChild(new Asterisk(fun.getLeftChild(), null, null));
+        fun.getLeftChild().getLeftChild().setLeftChild(new X(fun.getLeftChild().getLeftChild(), null, null));
+        fun.getLeftChild().getLeftChild().setRightChild(new Constant(4, fun.getLeftChild().getLeftChild(), null, null));
 
-        System.out.println(fun.getParent().getRightChild().getRightChild());
+        FunctionNode gun = FunctionNodeOperations.Derivative(fun);
 
+        // Cos(X * 2) * (1 * 4 + X * 0) * X + Sin(X * 2) * 1
+        System.out.println(gun);
+
+        // Cos is still being tested
     }
 
 }
