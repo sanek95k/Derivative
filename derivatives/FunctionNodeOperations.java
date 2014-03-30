@@ -19,6 +19,7 @@ public class FunctionNodeOperations {
     }
 
     public static FunctionNode Derivative(FunctionNode arg){
-        return arg.takeDerivative();
+        FunctionNode result = copyBranch(arg);
+        return result.takeDerivative();
     }
 }

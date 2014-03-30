@@ -49,7 +49,7 @@ public abstract class FunctionNode implements Cloneable{
     }
 
     @Override
-    final public String toString() {
+    public String toString() {
         return designation;
     }
 

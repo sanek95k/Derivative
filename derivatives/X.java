@@ -19,15 +19,6 @@ public class X extends FunctionNode {
 
     @Override
     public FunctionNode takeDerivative(){
-        FunctionNode result = new Constant(1, parent, leftChild, rightChild);
-        if (parent != null){
-            if (this == parent.leftChild){
-                parent.leftChild = result;
-            }
-            else{
-                parent.rightChild = result;
-            }
-        }
-        return result;
+        return new Constant(1.0, parent, leftChild, rightChild);
     }
 }

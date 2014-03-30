@@ -24,8 +24,12 @@ public class Asterisk extends FunctionNode {
         result = new Plus(parent, FunctionNodeOperations.copyBranch(this), FunctionNodeOperations.copyBranch(this));
         result.leftChild.parent = result;
         result.rightChild.parent = result;
-        result.leftChild.leftChild.takeDerivative();
-        result.rightChild.rightChild.takeDerivative();
+
+        result.leftChild.leftChild = result.leftChild.leftChild.takeDerivative();
+        result.leftChild.leftChild.parent = result.leftChild;
+
+        result.rightChild.rightChild = result.rightChild.rightChild.takeDerivative();
+        result.rightChild.rightChild.parent = result.rightChild;
         return result;
     }
 }

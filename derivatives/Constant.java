@@ -5,31 +5,21 @@ package derivatives;
  */
 public class Constant extends FunctionNode {
 
-    public Constant(Integer value){
+    public Constant(Double value){
         super(value.toString());
     }
 
-    public Constant(Integer value, FunctionNode parent, FunctionNode leftChild, FunctionNode rightChild){
+    public Constant(Double value, FunctionNode parent, FunctionNode leftChild, FunctionNode rightChild){
         super(value.toString(), parent, leftChild, rightChild);
     }
 
     @Override
     public FunctionNode clone(){
-        return new Constant(Integer.valueOf(designation));
+        return new Constant(Double.valueOf(designation));
     }
 
     @Override
     public FunctionNode takeDerivative(){
-        FunctionNode result = new Constant(0, parent, leftChild, rightChild);
-        if (parent != null){
-            if (this == parent.leftChild){
-                parent.leftChild = result;
-            }
-            else{
-                parent.rightChild = result;
-            }
-        }
-        return result;
+        return new Constant(0.0, parent, leftChild, rightChild);
     }
-
 }

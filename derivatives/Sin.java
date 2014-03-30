@@ -20,27 +20,12 @@ public class Sin extends FunctionNode {
 
     @Override
     public FunctionNode takeDerivative() {
-        FunctionNode result = new Cos();
+        FunctionNode result = null;
+        result = new Asterisk(parent, new Cos(null, leftChild, null), FunctionNodeOperations.copyBranch(leftChild).takeDerivative());
+        result.leftChild.parent = result;
+        result.rightChild.parent = result;
 
-        if (parent != null){
-            FunctionNode temp;
-            if (this == parent.leftChild){
-                parent.leftChild = new Asterisk(parent, result, this.leftChild);
-                temp = parent.leftChild;
-            }
-            else{
-                parent.rightChild = new Asterisk(parent, result, this.leftChild);
-                temp = parent.rightChild;
-            }
-            result.parent = temp;
-
-        }
-        else{
-            result.parent = new Asterisk(null, result, null);
-        }
-
-        result.leftChild = this.leftChild;
-        result.parent.rightChild = this.leftChild.takeDerivative();
+        result.leftChild.leftChild.parent = result.leftChild;
 
         return result;
     }
