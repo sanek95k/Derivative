@@ -37,7 +37,6 @@ public class Test {
 
 
         // Expression: 4 + X ^ 5
-
         FunctionNode jun = null;
         jun = new Plus(null, new Constant(4.0), new Power(5.0, null, new X(), null));
         jun.getLeftChild().setParent(jun);
@@ -48,5 +47,17 @@ public class Test {
 
         // Result: 0 + 5 * X ^ 4
         System.out.println(jun.getRightChild().getLeftChild().getLeftChild());
+
+
+        // Expression: Ln(X)
+        FunctionNode kun = null;
+        kun = new Ln(null, new X(), null);
+        kun.getLeftChild().setParent(kun);
+
+        kun = FunctionNodeOperations.Derivative(kun);
+
+        // Result: X ^ (-1) * 1
+        System.out.println(kun.getLeftChild());
+
     }
 }
